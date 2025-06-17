@@ -7,7 +7,8 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build:node": "cross-env NODE=true tsup",
-    "build:browser": "cross-env BROWSER=true tsup"
+    "build:browser": "cross-env BROWSER=true tsup",
+    "publish": "npm publish --access public"
   },
   "exports": {
     ".": {
