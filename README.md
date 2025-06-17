@@ -103,7 +103,7 @@ client
 ## 依赖
 
 - [cross-fetch](https://github.com/github/fetch)
-- [abort-controller](https://github.com/mysticatea/abort-controller) （Node 12-14 需手动安装使用）
+- [abort-controller](https://github.com/mysticatea/abort-controller)
 
 ## 开发与贡献
 
