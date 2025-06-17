@@ -13,7 +13,7 @@
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.js"
     },
     "./browser": {
       "import": "./dist/browser/index.js"
