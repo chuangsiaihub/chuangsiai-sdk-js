@@ -1,4 +1,4 @@
-import HmacSHA256 from 'crypto-js/hmac-sha256';
+import HmacSHA256 from 'crypto-js/hmac-sha256.js';
 import { AuthenticationException } from './exceptions';
 import { uuidV4 } from './utils';
 
