@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>ChuangSIAI SDK 示例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background: #f9f9f9;
+            padding: 40px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            background: #4f46e5;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #3730a3;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #dcdcdc;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧠 ChuangSIAI SDK Web 测试</h1>
+
+    <div class="container">
+        <label for="authMode">认证方式</label>
+        <select id="authMode">
+            <option value="apiKey">使用 API Key</option>
+            <option value="aksk">使用 AccessKey + SecretKey</option>
+        </select>
+
+        <div id="apiKeyGroup">
+            <label for="apiKey">API Key</label>
+            <input type="text" id="apiKey" placeholder="输入你的 API Key（创思控制台获取）" />
+        </div>
+
+        <div id="akskGroup" class="hidden">
+            <label for="accessKey">Access Key</label>
+            <input type="text" id="accessKey" placeholder="输入你的 Access Key（创思控制台获取）" />
+            <label for="secretKey">Secret Key</label>
+            <input type="text" id="secretKey" placeholder="输入你的 Secret Key（创思控制台获取）" />
+        </div>
+
+        <label for="strategyKey">策略标识</label>
+        <input type="text" id="strategyKey" placeholder="输入策略 key（创思控制台获取）" />
+
+        <label for="content">检测内容</label>
+        <input type="text" id="content" value="你好，世界！" placeholder="输入需要检测的内容" />
+
+        <button id="run">发送 API 请求</button>
+        <pre id="output">等待用户操作...</pre>
+    </div>
+
+    <!-- 引入构建后的浏览器 SDK -->
+    <script src="../dist/index.global.js"></script>
+    <script>
+        const authModeSelect = document.getElementById("authMode");
+        const apiKeyGroup = document.getElementById("apiKeyGroup");
+        const akskGroup = document.getElementById("akskGroup");
+
+        // 切换显示区域
+        authModeSelect.addEventListener("change", () => {
+            if (authModeSelect.value === "apiKey") {
+                apiKeyGroup.classList.remove("hidden");
+                akskGroup.classList.add("hidden");
+            } else {
+                apiKeyGroup.classList.add("hidden");
+                akskGroup.classList.remove("hidden");
+            }
+        });
+
+        document.getElementById("run").addEventListener("click", async () => {
+            const { ChuangsiaiClient } = window.ChuangSIAISDK;
+
+            const authMode = authModeSelect.value;
+            const apiKey = document.getElementById("apiKey").value.trim();
+            const accessKey = document.getElementById("accessKey").value.trim();
+            const secretKey = document.getElementById("secretKey").value.trim();
+            const strategyKey = document.getElementById("strategyKey").value.trim();
+            const content = document.getElementById("content").value.trim();
+            const output = document.getElementById("output");
+
+            let clientConfig = {};
+
+            if (authMode === "apiKey") {
+                if (!apiKey) {
+                    output.textContent = "❌ 请输入 API Key";
+                    return;
+                }
+                clientConfig.apiKey = apiKey;
+            } else {
+                if (!accessKey || !secretKey) {
+                    output.textContent = "❌ 请输入 Access Key 和 Secret Key";
+                    return;
+                }
+                clientConfig.accessKey = accessKey;
+                clientConfig.secretKey = secretKey;
+            }
+
+            const client = new ChuangsiaiClient(clientConfig);
+
+            try {
+                const result = await client.inputGuardrail({
+                    strategyKey: strategyKey || "default_strategy",
+                    content: content,
+                });
+
+                output.textContent = JSON.stringify(result, null, 2);
+            } catch (err) {
+                output.textContent = "❌ 错误：" + err.message;
+            }
+        });
+    </script>
+</body>
+
+</html>

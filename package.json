@@ -1,0 +1,61 @@
+{
+  "name": "chuangsiai-sdk",
+  "version": "1.0.3",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build:node": "cross-env NODE=true tsup",
+    "build:browser": "cross-env BROWSER=true tsup"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./browser": {
+      "import": "./dist/browser/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "chuangsiai",
+    "sdk",
+    "safety",
+    "security",
+    "api",
+    "llm",
+    "api-client",
+    "nodejs",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chuangsiaihub/chuangsiai-sdk-js"
+  },
+  "homepage": "https://chuangsiai.com",
+  "author": {
+    "name": "chuangsiai",
+    "email": "service@chuangsiai.com",
+    "url": "https://chuangsiai.com"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "abort-controller": "^3.0.0",
+    "cross-fetch": "^3.1.8",
+    "crypto-js": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^24.0.3",
+    "cross-env": "^7.0.3",
+    "tsup": "^7.0.0",
+    "typescript": "^5.0.0"
+  }
+}
