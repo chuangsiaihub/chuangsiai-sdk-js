@@ -20,4 +20,6 @@ export interface SafetyClientOptions {
     baseUrl?: string;
     /** API 请求超时时间 */
     timeout?: number;
+    /** API 请求头 */
+    headers?: Record<string, string>;
 }

@@ -15,6 +15,7 @@ export class ChuangsiaiClient {
     private auth: AuthGenerator;
     private baseUrl: string;
     private timeout: number;
+    private headers: Record<string, string> = {};
 
     /**
      * 初始化安全客户端，根据参数自动选择认证方式
@@ -33,6 +34,7 @@ export class ChuangsiaiClient {
         this.auth = new AuthGenerator(authOptions);
         this.baseUrl = options?.baseUrl ?? DEFAULT_BASE_URL;
         this.timeout = options?.timeout ?? DEFAULT_TIMEOUT;
+        this.headers = options?.headers ?? {};
     }
 
     private async request(method: 'POST', path: string, payload: GuardrailRequest) {
@@ -48,6 +50,7 @@ export class ChuangsiaiClient {
                 headers: {
                     ...headers,
                     'Content-Type': 'application/json',
+                    ...this.headers,
                 },
                 body: JSON.stringify(payload),
                 signal: controller.signal as AbortSignal,
