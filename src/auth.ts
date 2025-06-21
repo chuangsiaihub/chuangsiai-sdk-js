@@ -52,7 +52,7 @@ export class AuthGenerator {
 
         // 如果 authType 为 'API_KEY'，则将 Authorization 和 X-Referer 添加到请求头中
         if (this.authType === 'API_KEY') {
-            headers['Authorization'] = `Bearer ${this.apiKey}`;
+            headers['Authorization'] = `${this.apiKey}`;
             headers['X-Referer'] = 'js-sdk-apikey';
             return headers;
         }
