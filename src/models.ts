@@ -1,7 +1,7 @@
 /** 请求输入模型 */
 export interface GuardrailRequest {
     /** 策略标识 */
-    strategyKey: string;
+    strategyId: string;
     /** 请求内容 */
     content: string;
 }

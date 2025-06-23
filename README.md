@@ -78,7 +78,7 @@ client
     ```ts
     interface GuardrailRequest {
       content: string;
-      strategyKey: string;
+      strategyId: string;
     }
     ```
 - `outputGuardrail(payload: GuardrailRequest): Promise<any>`
@@ -87,7 +87,7 @@ client
     ```ts
     interface GuardrailRequest {
       content: string;
-      strategyKey: string;
+      strategyId: string;
     }
     ```
 
