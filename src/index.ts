@@ -7,6 +7,7 @@ import { APIException, ChuangSiAiSafetyException } from './exceptions';
 const DEFAULT_BASE_URL = 'https://api.chuangsiai.com';
 const INPUT_API = '/api/v1/llm/check-input-safety';
 const OUTPUT_API = '/api/v1/llm/check-output-safety';
+const VERIFY_API = '/api/verify/signature';
 const DEFAULT_TIMEOUT = 10000;
 
 const AbortControllerClass = typeof AbortController !== 'undefined' ? AbortController : AbortControllerPolyfill;
@@ -82,4 +83,12 @@ export class ChuangsiaiClient {
     outputGuardrail(payload: GuardrailRequest) {
         return this.request('POST', OUTPUT_API, payload);
     }
+
+    /**
+     * 验证 ApiKey 或 AccessKey+SecretKey 是否有效
+     */
+    verify() {
+        return this.request('POST', VERIFY_API, { content: "verify", strategyId: "" });
+    }
+
 }
